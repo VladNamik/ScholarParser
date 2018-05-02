@@ -1,0 +1,34 @@
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.geometry.Insets?>
+<GridPane fx:controller="ui.MainWindowController"
+          xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10">
+
+    <VBox alignment="CENTER">
+        <padding><Insets left="10" right="10" top="2"/></padding>
+        <Text text="Введите url на страницу Google Scholar, с которой вы хотите начать парсинг:"/>
+        <TextField fx:id="urlField" promptText="https://scholar.google.com.ua/citations?..." prefWidth="500"/>
+        <HBox alignment="TOP_CENTER">
+            <Button text="parse" onAction="#onParseButtonClicked"/>
+            <Button text="save in xls" onAction="#onSaveInXLSButtonClicked"/>
+            <padding><Insets top="2" bottom="2"/></padding>
+        </HBox>
+        <Button text="update" onAction="#onUpdateButtonClicked"/>
+        <ScrollPane fitToWidth="true" fitToHeight="true" >
+            <TableView fx:id="mainList"/>
+        </ScrollPane>
+        <HBox>
+            <padding><Insets top="2" bottom="2"/></padding>
+            <ProgressBar fx:id="progressBar" managed="false"/>
+            <Text fx:id="bottomText"/>
+        </HBox>
+    </VBox>
+</GridPane>
