@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="org.jsoup:jsoup:1.10.2" level="project" />
     <orderEntry type="library" name="org.apache.poi:poi:3.15" level="project" />
+    <orderEntry type="library" name="jfxrt" level="project" />
   </component>
 </module>

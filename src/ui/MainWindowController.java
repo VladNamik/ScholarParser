@@ -232,8 +232,8 @@ public class MainWindowController {
     private void savingErrorAlert() {
         System.out.println(ScholarParser.currentlyParsedPagesCount);
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Ошибка при попытке сохранения");
-        alert.setHeaderText("Ошибка при попытке сохранения");
+        alert.setTitle("Error trying to save data");
+        alert.setHeaderText("Error trying to saved data");
 
         alert.showAndWait();
         endParsing("Saving has failed");
@@ -241,9 +241,9 @@ public class MainWindowController {
 
     private void connectionErrorAlert() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Проблема доступа к данным");
-        alert.setHeaderText("Проблема доступа к удалённым данным");
-        alert.setContentText("Убедитесь, что ссылка введена верно, и присутствует подключение к сети");
+        alert.setTitle("The problem of access to data");
+        alert.setHeaderText("The problem of accessing remote data");
+        alert.setContentText("Make sure the link is entered correctly and there is a connection to the network");
 
         alert.showAndWait();
         endParsing("Parsing has failed");
@@ -251,9 +251,9 @@ public class MainWindowController {
 
     private void errorInData() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Ошибка в данных");
-        alert.setHeaderText("Ошибка в данных");
-        alert.setContentText("Убедитесь, что все данные для элементов введены правильно");
+        alert.setTitle("Data error");
+        alert.setHeaderText("Data error");
+        alert.setContentText("Make sure all data for elements entered correctly");
 
         alert.showAndWait();
         endParsing("Parsing has failed");
@@ -261,10 +261,10 @@ public class MainWindowController {
 
     private void errorInDataWhileUpdating(List<Integer> indices) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Ошибка в данных");
-        alert.setHeaderText("Ошибка в данных");
+        alert.setTitle("Data error");
+        alert.setHeaderText("Data error");
         StringBuilder message = new StringBuilder();
-        message.append("Несколько пользователей было пропущенно. Проверьте правильность id пользователей в строках:\n");
+        message.append("Several users were omitted. Check the id of the users in the rows:\n");
         for (Integer index: indices) {
             message.append(index);
             message.append(", ");
@@ -280,17 +280,17 @@ public class MainWindowController {
 
     private void noDataToSaveError() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Данные для сохранения отсутствуют");
-        alert.setHeaderText("Нет данных для сохранения");
-        alert.setContentText("Пожалуйста, нажмите сначала кнопку \"parse\"");
+        alert.setTitle("No data to save");
+        alert.setHeaderText("No data to save");
+        alert.setContentText("Please, press \"parse\" button before and wait for parsing to end");
 
         alert.showAndWait();
     }
 
     private void unknownError(Exception e) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Неизвестная ошибка");
-        alert.setHeaderText("Неизвестная ошибка");
+        alert.setTitle("Unknown error");
+        alert.setHeaderText("Unknown error");
         alert.setContentText(e.getLocalizedMessage());
 
         alert.showAndWait();

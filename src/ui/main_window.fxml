@@ -14,7 +14,7 @@
 
     <VBox alignment="CENTER">
         <padding><Insets left="10" right="10" top="2"/></padding>
-        <Text text="Введите url на страницу Google Scholar, с которой вы хотите начать парсинг:"/>
+        <Text text="Enter the url on the Google Scholar page with which you want to start parsing:"/>
         <TextField fx:id="urlField" promptText="https://scholar.google.com.ua/citations?..." prefWidth="500"/>
         <HBox alignment="TOP_CENTER">
             <Button text="parse" onAction="#onParseButtonClicked"/>
