@@ -41,7 +41,11 @@ public class ScholarParser {
         void onUpdate(int lastAddedUserNumber);
     }
 
-    public static List<GSCUser> parse(String url, OnUpdateParseStatusListener parseStatusListener) throws IOException{
+    public interface CheckParsingStatusInterface {
+        boolean isStopped();
+    }
+
+    public static List<GSCUser> parse(String url, OnUpdateParseStatusListener parseStatusListener, CheckParsingStatusInterface checkParsingStatus) throws IOException {
         List<GSCUser> users = new ArrayList<>();
 
         Element buttonNext;
@@ -57,16 +61,21 @@ public class ScholarParser {
             if (!buttonNext.hasAttr("onclick")) {
                 break;
             }
+            System.out.println(String.format("Page %d, url: %s", currentlyParsedPagesCount, url));
+
+            if (checkParsingStatus != null && checkParsingStatus.isStopped()) {
+                break;
+            }
             url = getNextURL(buttonNext.attr("onclick"));
         }
         return users;
     }
 
 
-    public static Pair<List<GSCUser>, List<Integer>> parseUsersByIds(List<GSCUser> users, OnUpdateParseStatusListener parseStatusListener) throws IOException{
+    public static Pair<List<GSCUser>, List<Integer>> parseUsersByIds(List<GSCUser> users, OnUpdateParseStatusListener parseStatusListener) throws IOException {
         int index = 1;
         List<Integer> notParsedUsersIds = new ArrayList<>();
-        for (GSCUser user: users) {
+        for (GSCUser user : users) {
             try {
                 parseUser(user.getUserPageURL(), user);
             } catch (NullPointerException | IllegalArgumentException e) {
@@ -79,22 +88,22 @@ public class ScholarParser {
     }
 
 
-    public static List<GSCUser> parse(String url) throws IOException{
-        return parse(url, null);
+    public static List<GSCUser> parse(String url) throws IOException {
+        return parse(url, null, null);
     }
 
 
-    public static List<GSCUser> parsePage(String url) throws IOException{
+    public static List<GSCUser> parsePage(String url) throws IOException {
         currentlyParsedPagesCount++;
         return parsePage(Jsoup.connect(url).userAgent(getUserAgent()).timeout(60000).get());
     }
 
-    private static List<GSCUser> parsePage(Document document) throws IOException{
+    private static List<GSCUser> parsePage(Document document) throws IOException {
         Elements elements = document.getElementsByClass(USER_CLASS);
 
         List<GSCUser> users = new ArrayList<>();
         GSCUser user = null;
-        for(Element element: elements) {
+        for (Element element : elements) {
             user = new GSCUser(element.getElementsByClass(USER_NAME_CLASS).first().text(),
                     element.getElementsByClass(USER_NAME_CLASS).first().getElementsByTag("a").first().attr("abs:href"));
             user = parseUser(user.getUserPageURL(), user);

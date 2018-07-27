@@ -40,6 +40,20 @@ public class MainWindowController {
     @FXML
     private TextField urlField;
 
+    private static class ParsingStatusUpdater implements ScholarParser.CheckParsingStatusInterface {
+        private boolean stopped = false;
+
+        @Override
+        public boolean isStopped() {
+            return stopped;
+        }
+
+        public void setStopped(boolean stopped) {
+            this.stopped = stopped;
+        }
+    }
+
+    ParsingStatusUpdater parsingStatusUpdater = new ParsingStatusUpdater();
 
     public MainWindowController() {
     }
@@ -86,32 +100,33 @@ public class MainWindowController {
 
 
     @FXML
-    private void onParseButtonClicked()
-    {
+    private void onParseButtonClicked() {
         beginConnecting();
-        new Thread(() ->{
+        new Thread(() -> {
             try {
                 if (mainObservableList.size() > 0) {
-                   mainObservableList.clear();
+                    mainObservableList.clear();
                 }
                 lastDownloadedUsers = ScholarParser.parse(urlField.getText(), (userNumber) ->
-                        Platform.runLater(() -> updateLastUserNumber(userNumber)));
+                        Platform.runLater(() -> updateLastUserNumber(userNumber)), parsingStatusUpdater);
                 Platform.runLater(() -> {
                     lastDownloadedUsers.forEach((user) -> mainObservableList.add(user));
                     endParsing("Parsing finished successfully");
                 });
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
                 Platform.runLater(this::connectionErrorAlert);
-            }
-            catch (NullPointerException | IllegalArgumentException e)
-            {
+            } catch (NullPointerException | IllegalArgumentException e) {
                 Platform.runLater(this::errorInData);
             }
         }
         ).start();
+    }
+
+    @FXML
+    private void onStopButtonClicked()
+    {
+        parsingStatusUpdater.setStopped(true);
     }
 
     @FXML
@@ -209,8 +224,7 @@ public class MainWindowController {
         }
     }
 
-    private void beginConnecting()
-    {
+    private void beginConnecting() {
         progressBar.setManaged(true);
         progressBar.setVisible(true);
         bottomText.setText("Connecting...");
@@ -220,8 +234,7 @@ public class MainWindowController {
         bottomText.setText("Parsing... already have " + number + " users.");
     }
 
-    private void endParsing(String text)
-    {
+    private void endParsing(String text) {
         progressBar.setProgress(1);
         bottomText.setText(text);
         progressBar.setManaged(false);
@@ -265,7 +278,7 @@ public class MainWindowController {
         alert.setHeaderText("Data error");
         StringBuilder message = new StringBuilder();
         message.append("Several users were omitted. Check the id of the users in the rows:\n");
-        for (Integer index: indices) {
+        for (Integer index : indices) {
             message.append(index);
             message.append(", ");
         }

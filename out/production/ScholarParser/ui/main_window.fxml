@@ -12,23 +12,27 @@
 <GridPane fx:controller="ui.MainWindowController"
           xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10">
 
-    <VBox alignment="CENTER">
-        <padding><Insets left="10" right="10" top="2"/></padding>
-        <Text text="Введите url на страницу Google Scholar, с которой вы хотите начать парсинг:"/>
+    <VBox alignment="CENTER" spacing="6">
+        <padding><Insets left="18" right="18" top="8"/></padding>
+        <Text text="Enter the url on the Google Scholar page with which you want to start parsing:"/>
         <TextField fx:id="urlField" promptText="https://scholar.google.com.ua/citations?..." prefWidth="500"/>
-        <HBox alignment="TOP_CENTER">
-            <Button text="parse" onAction="#onParseButtonClicked"/>
-            <Button text="save in xls" onAction="#onSaveInXLSButtonClicked"/>
+        <HBox alignment="TOP_CENTER" spacing="4">
+            <Button text="Parse" onAction="#onParseButtonClicked"/>
+            <Button text="Save in xls" onAction="#onSaveInXLSButtonClicked"/>
+            <Button text="Update" onAction="#onUpdateButtonClicked"/>
+            <Button text="Stop" onAction="#onStopButtonClicked"/>
             <padding><Insets top="2" bottom="2"/></padding>
         </HBox>
-        <Button text="update" onAction="#onUpdateButtonClicked"/>
         <ScrollPane fitToWidth="true" fitToHeight="true" >
             <TableView fx:id="mainList"/>
         </ScrollPane>
         <HBox>
             <padding><Insets top="2" bottom="2"/></padding>
             <ProgressBar fx:id="progressBar" managed="false"/>
-            <Text fx:id="bottomText"/>
+            <HBox alignment="CENTER_LEFT">
+                <padding><Insets left="4" right="4"/></padding>
+                <Text fx:id="bottomText"/>
+            </HBox>
         </HBox>
     </VBox>
 </GridPane>
