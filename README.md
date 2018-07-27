@@ -19,3 +19,5 @@ Parsing speed is about 1 user/sec and University of Toronto Google Scholar page 
 Переходим на первую страницу с профилями участников нужного университета, копируем ссылку:
 
 Вводим ссылку в текстовое поле программы, нажимаем кнопку «parse»:
+<a href="url"><img src="https://github.com/VladNamik/ScholarParser/blob/master/screenshots/on_parsing.png?raw=true" align="center" height="529" width="753"></a>
+<a href="url"><img src="https://github.com/VladNamik/ScholarParser/blob/master/screenshots/parsing_finished.png?raw=true" align="center" height="529" width="753"></a>
